@@ -2,7 +2,7 @@
   "name": "nodejs-image-demo",
   "version": "1.0.0",
   "description": "nodejs image demo",
-  "author": "Sammy the Shark <sammy@example.com>",
+  "author": "Oleg Satalkin <oleg.satalkin@gmail.com>",
   "license": "MIT",
   "main": "app.js",
   "keywords": [
