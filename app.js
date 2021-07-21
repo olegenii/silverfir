@@ -19,7 +19,9 @@ router.use(function (req,res,next) {
 
 
 router.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html')
+    var myReadStream = fs.createReadStream(__dirname + '/index.html');
+    myReadStream.pipe(res);
+    //res.sendFile(__dirname + '/index.html')
 })
 
 router.get('/createDirectory', function (req, res) {
