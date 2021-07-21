@@ -43,7 +43,6 @@ router.get('/bond', function(req,res){
 
 router.post('/bond_new', urlencodedParser, function(req,res){
   getHTML(showHtml,res,req.body.bidFrom,req.body.bidTill,req.body.dateFrom,req.body.dateTill,req.body.bondLevel,req.body.isOffer);
-//  res.send(req.body)
 });
 
 function showHtml(res){
@@ -53,7 +52,6 @@ function showHtml(res){
 async function getHTML(callback){
     await index.start(arguments[2],arguments[3],arguments[4],arguments[5],arguments[6],arguments[7]);
     callback(arguments[1]);
-    //callback();
 };
 
 router.get('/bond_new', function(req,res){
