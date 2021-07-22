@@ -1,5 +1,6 @@
 var express = require('express');
 var whois = require('node-whois');
+var fs = require("fs")
 var router = express.Router();
 
 var index = require("./index.js");
