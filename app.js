@@ -18,10 +18,14 @@ router.use(function (req,res,next) {
 });
 
 
-router.get('/', function (req, res) {
-    var myReadStream = fs.createReadStream(__dirname + '/in/index.html');
-    myReadStream.pipe(res);
-    //res.sendFile(__dirname + '/index.html')
+//router.get('/', function (req, res) {
+//    var myReadStream = fs.createReadStream(__dirname + '/in/index.html');
+//    myReadStream.pipe(res);
+//    //res.sendFile(__dirname + '/index.html')
+//})
+
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/in/index.html')
 })
 
 router.get('/createDirectory', function (req, res) {
