@@ -50,7 +50,7 @@ router.get('/bond', (req,res)=>{
 });
 
 router.post('/bond_new', urlencodedParser, (req,res)=>{
-  getHTML(showHtml,res,req.body.bidFrom,req.body.bidTill,req.body.dateFrom,req.body.dateTill,req.body.bondLevel,req.body.isOffer);
+  getHTML(showHtml,res,req.body.bidFrom,req.body.bidTill,req.body.dateFrom,req.body.dateTill,req.body.bondLevel,req.body.isOffer,req.body.priceFrom,req.body.priceTill,req.body.volumeMore);
 });
 
 function showHtml(res){
@@ -60,7 +60,7 @@ function showHtml(res){
 };
 
 async function getHTML(callback){
-    await index.start(arguments[2],arguments[3],arguments[4],arguments[5],arguments[6],arguments[7]);
+    await index.start(arguments[2],arguments[3],arguments[4],arguments[5],arguments[6],arguments[7],arguments[8],arguments[9],arguments[10]);
     callback(arguments[1]);
 };
 

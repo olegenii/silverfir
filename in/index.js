@@ -17,8 +17,9 @@
  */
 
 /**start()*/
+const dayStrike = 7
 
-async function start(YieldMore,YieldLess,MatdateMore,MatdateLess,ListLevelMore,Offerdate) {
+async function start(YieldMore,YieldLess,MatdateMore,MatdateLess,ListLevelMore,Offerdate,PriceMore,PriceLess,VolumeMore) {
     let startTime = (new Date()).getTime(); //записываем текущее время в формате Unix Time Stamp - Epoch Converter
     console.log("Функция %s начала работу в %s. \n", getFunctionName(), (new Date()).toLocaleString("ru-RU"))
 
@@ -27,7 +28,7 @@ async function start(YieldMore,YieldLess,MatdateMore,MatdateLess,ListLevelMore,O
     global.path = require('path')
     global.moment = require('moment')
 
-    await MOEXsearchBonds(YieldMore,YieldLess,MatdateMore,MatdateLess,ListLevelMore,Offerdate)
+    await MOEXsearchBonds(YieldMore,YieldLess,MatdateMore,MatdateLess,ListLevelMore,Offerdate,PriceMore,PriceLess,VolumeMore)
 
     let currTime = (new Date()).getTime();
     let duration = Math.round((currTime - startTime) / 1000 / 60 * 100) / 100; //время выполнения скрипта в минутах
@@ -40,23 +41,23 @@ module.exports.start = start;
  * Основная функция
  */
 
-async function MOEXsearchBonds(YieldMore,YieldLess,MatdateMore,MatdateLess,ListLevelMore,Offerdate) { //поиск облигаций по параметрам
+async function MOEXsearchBonds(YieldMore,YieldLess,MatdateMore,MatdateLess,ListLevelMore,Offerdate,PriceMore,PriceLess,VolumeMore) { //поиск облигаций по параметрам
 //  const YieldMore = 5 //Доходность больше этой цифры
 //  const YieldLess = 14 //Доходность меньше этой цифры
-    const PriceMore = 97 //Цена больше этой цифры
-    const PriceLess = 103 //Цена меньше этой цифры
+//    const PriceMore = 97 //Цена больше этой цифры
+//    const PriceLess = 103 //Цена меньше этой цифры
 	
 //  const ListLevelMore = 1 //Уровень листинга не меньше этой цифры
 //  ListLevelMore = 1
 //  const Offerdate = null //Без оферты
     Offerdate == "on" ? Offerdate = true : Offerdate = null
-    const dayStrike = 7
+
 //  const MatdateMore = "2022-01-01"
 //  const MatdateLess = "2023-01-01"
 	
-    const DurationMore = 3 //Дюрация больше этой цифры
-    const DurationLess = 36 //Дюрация меньше этой цифры
-    const VolumeMore = 300 //Объем сделок в каждый из n дней, шт. больше этой цифры
+//    const DurationMore = 3 //Дюрация больше этой цифры
+//    const DurationLess = 36 //Дюрация меньше этой цифры
+//    const VolumeMore = 300 //Объем сделок в каждый из n дней, шт. больше этой цифры
     const conditions = `<li>${YieldMore}% < Доходность < ${YieldLess}%</li>
                         <li>${PriceMore}% < Цена < ${PriceLess}%</li>`+
                         
@@ -94,15 +95,15 @@ async function MOEXsearchBonds(YieldMore,YieldLess,MatdateMore,MatdateLess,ListL
                 SECID = json.securities.data[i][0]
                 BondPrice = json.securities.data[i][2]
                 BondYield = json.marketdata.data[i][1]
-		BondMatdate = json.securities.data[i][3]
-		BondOfferdate = json.securities.data[i][4]
+		        BondMatdate = json.securities.data[i][3]
+		        BondOfferdate = json.securities.data[i][4]
                 BondListLevel = json.securities.data[i][5]
                 BondDuration = Math.floor((json.marketdata.data[i][2] / 30) * 100) / 100 // кол-во оставшихся месяцев 
-                console.log(`${getFunctionName()}. Строка ${i + 1} из ${count}: ${BondName} (${SECID}): цена=${BondPrice}%, доходность=${BondYield}%.`)
+                //console.log(`${getFunctionName()}. Строка ${i + 1} из ${count}: ${BondName} (${SECID}): цена=${BondPrice}%, доходность=${BondYield}%.`)
                 log += '<li>Строка ' + (i + 1) + ' из ' + count + ': ' + BondName + ' (' + SECID + '): цена=' + BondPrice + '%, доходность=' + BondYield + '%.</li>'
                 if (BondYield > YieldMore && BondYield < YieldLess && //условия выборки
                     BondPrice > PriceMore && BondPrice < PriceLess &&
-		    BondListLevel <= ListLevelMore &&
+		            BondListLevel <= ListLevelMore &&
 					//BondOfferdate == Offerdate &&
                     BondMatdate >= MatdateMore && BondMatdate <= MatdateLess){ // &&
 				//	BondDuration > DurationMore && BondDuration < DurationLess) {
@@ -145,7 +146,7 @@ module.exports.MOEXsearchBonds = MOEXsearchBonds;
 
 async function MOEXsearchVolume(ID, thresholdValue) { // Объем сделок в каждый из n дней больше определенного порога
     now = new Date();
-    DateRequestPrevious = moment().subtract(15, 'days').format('YYYY-MM-DD') // `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate() - 15}`; //этот день n дней назад
+    DateRequestPrevious = moment().subtract(dayStrike, 'days').format('YYYY-MM-DD') // `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate() - 15}`; //этот день n дней назад
     const boardID = await MOEXboardID(ID)
     if (!boardID) {
         return
@@ -168,7 +169,7 @@ async function MOEXsearchVolume(ID, thresholdValue) { // Объем сделок
             volume_sum += volume
             if (thresholdValue > volume) {
                 lowLiquid = 1
-                console.log(`${getFunctionName()}. На ${i+1}-й день из ${count} оборот по бумаге ${ID} меньше чем ${thresholdValue}: ${volume} шт.`)
+                //console.log(`${getFunctionName()}. На ${i+1}-й день из ${count} оборот по бумаге ${ID} меньше чем ${thresholdValue}: ${volume} шт.`)
                 log += `<li>Поиск оборота. На ${i+1}-й день из ${count} оборот по бумаге ${ID} меньше чем ${thresholdValue}: ${volume} шт.</li>`
             }
         }
@@ -293,7 +294,7 @@ async function HTMLgenerate(bonds, conditions, log) { //генерировани
                 data.addColumn('string', 'Полное наименование');
                 data.addColumn('string', 'Код ценной бумаги');
                 data.addColumn('number', 'Цена, %');
-                data.addColumn('number', 'Объем сделок, шт.'); // с ${moment().subtract(15, 'days').format('DD.MM.YYYY')}
+                data.addColumn('number', 'Объем сделок, шт.'); // с ${moment().subtract(dayStrike, 'days').format('DD.MM.YYYY')}
                 data.addColumn('number', 'Доходность');
 				
 				// BondOfferdate, BondListLevel,
@@ -358,7 +359,7 @@ async function HTMLgenerate(bonds, conditions, log) { //генерировани
 	var out_file_name = './out/bond_search.html'
     try {
         fs.writeFileSync(out_file_name, hmtl)
-        console.log(`\nЗаписано на диск с именем ${moment().format('YYYY-MM-DD')}.html`)
+        console.log(`\nЗаписано на диск с именем ${out_file_name}`)
     } catch (e) {
         console.log('Ошибка в %s', getFunctionName())
     }

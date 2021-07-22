@@ -16,10 +16,16 @@
     <h1 align="center">Сервис поиска ликвидных облигаций</h1>
     <p>       
     <form align="center" action="/bond_new" method="post">
-        <input type="number" value="7.00" step="0.01" min="-100" max="1000" width="3em" name="bidFrom" /> <= Доходность <= <input type="number" value="10.00"  step="0.01" min="-100" max="1000" width="3em" name="bidTill" />
+        <input type="number" value="97.00" step="0.01" min="-100" max="1000" width="3em" name="priceFrom" /> <= Цена <= <input type="number" value="103.00"  step="0.01" min="-100" max="1000" width="3em" name="priceTill" />
+        <br>
+        <br>
+        <input type="number" value="6.00" step="0.01" min="-100" max="1000" width="3em" name="bidFrom" /> <= Доходность <= <input type="number" value="10.00"  step="0.01" min="-100" max="1000" width="3em" name="bidTill" />
         <br>
         <br>
         <input type="text" value="2022-01-01" style="width: 100px;" name="dateFrom" /> <= Погашение <= <input type="text" value="2023-01-01"  style="width: 100px;" size="0000-00-00" name="dateTill" />
+        <br>
+        <br>
+        <input type="number" value="100" step="1" min="0" max="9999999" width="3em" name="volumeMore" /> <= Ежедневных сделок за 7 последних дней
         <br>
         <br>
         Уровень листинга <= <input type="number" value=1 step=1 min=1 max=3 width="2em" name="bondLevel" />
