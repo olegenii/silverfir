@@ -25,7 +25,7 @@ router.use((req,res,next)=>{
 //    //res.sendFile(__dirname + '/index.html')
 //})
 
-app.get('/',(req, res)=>{
+router.get('/',(req, res)=>{
     //res.sendFile(__dirname + '/in/index.html')
     var myReadStream = fs.createReadStream(__dirname + '/in/index.html');
     myReadStream.pipe(res);
