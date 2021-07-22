@@ -9,48 +9,64 @@
     <title>Главная</title>
     <style class="text/css">
     </style>
-    <title>Сервис поиска ликвидных облигаций</title>
+    <title>🕵️Сервис поиска ликвидных облигаций</title>
   </head>
 
   <body>
     <h1 align="center">Сервис поиска ликвидных облигаций</h1>
     <p>       
     <form align="center" action="/bond_new" method="post">
-        <input type="number" value="97.00" step="0.01" min="-100" max="1000" width="3em" name="priceFrom" /> <= Цена <= <input type="number" value="103.00"  step="0.01" min="-100" max="1000" width="3em" name="priceTill" />
+        <div class="mb-3">
+          <input type="number"  value="97.00" step="0.01" min="-100" max="1000" width="3em" name="priceFrom" /> <= Цена <= <input type="number" value="103.00"  step="0.01" min="-100" max="1000" width="3em" name="priceTill" />
+        </div>
+       
+        <div class="mb-3">
+          <input type="number" value="6.00" step="0.01" min="-100" max="1000" width="3em" name="bidFrom" /> <= Доходность <= <input type="number" value="10.00"  step="0.01" min="-100" max="1000" width="3em" name="bidTill" />
+        </div>
+        <div class="mb-3">
+          <input type="text" value="2022-01-01" style="width: 100px;" name="dateFrom" /> <= Погашение <= <input type="text" value="2023-01-01"  style="width: 100px;" size="0000-00-00" name="dateTill" />
+        </div>
+        <div class="mb-3">
+          <input type="number" value="100" step="1" min="0" max="9999999" width="3em" name="volumeMore" /> <= Ежедневных сделок за 7 последних дней
+        </div>
+        <div class="mb-3">
+          Уровень листинга <= <input type="number" value=1 step=1 min=1 max=3 width="2em" name="bondLevel" />
+        </div>
+        <div class="mb-3 form-check"></div>
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" name="isOffer"  /> Оферта допустима?</label>
+        </div>
         <br>
         <br>
-        <input type="number" value="6.00" step="0.01" min="-100" max="1000" width="3em" name="bidFrom" /> <= Доходность <= <input type="number" value="10.00"  step="0.01" min="-100" max="1000" width="3em" name="bidTill" />
-        <br>
-        <br>
-        <input type="text" value="2022-01-01" style="width: 100px;" name="dateFrom" /> <= Погашение <= <input type="text" value="2023-01-01"  style="width: 100px;" size="0000-00-00" name="dateTill" />
-        <br>
-        <br>
-        <input type="number" value="100" step="1" min="0" max="9999999" width="3em" name="volumeMore" /> <= Ежедневных сделок за 7 последних дней
-        <br>
-        <br>
-        Уровень листинга <= <input type="number" value=1 step=1 min=1 max=3 width="2em" name="bondLevel" />
-        <br>
-        <br>
-        <label><input type="checkbox" name="isOffer"  /> Оферта допустима?</label>
-        <br>
-        <br>
-        <input type="submit" value="Сформировать выборку" />
+        <input type="submit" class="btn btn-primary" value="Сформировать выборку" />
     </form>
-    <p>
-    <p>
-    <p align="center"><button onclick="window.location.href = '/bond';">Открыть выборку</button>
+    <br>
+    <br>
+    <br>
+    <p align="center"><button class="btn btn-secondary" onclick="window.location.href = '/bond';">Открыть выборку</button>
     <p>
     <br>
-	<details align="center">
-    <summary>Информация</summary><small>
+	  <details align="center">
+      <summary>Информация</summary>
+      <small>
         <ol>
-        <br> Сервис формирует выборку ликвидных облигаций c ММВБ по заданным параметрам.
-        <br> Процесс может занимать до нескольких минут.
-        <br> Проект на <a href="https://github.com/olegenii/silverfir/tree/npm-test">GitHub</a>
+        <br>Сервис формирует выборку облигаций c ММВБ по заданным параметрам.
+        <br>Указание количества сделок позволяет выбрать ликвидные облигации, по которым идет ежедневная торговля.
+        <br>Процесс может занимать до нескольких минут, пожалуйста дождитесь формирования отчета.
+        <br>Последний сформированный отчет доступен по кнопке "Открыть выборку".
+        <br>  
+        <br>Проект на <a href="https://github.com/olegenii/silverfir/tree/npm-test">GitHub</a>
         </ol>
-    </small>
+      </small>
     </details>
-
+    <div style="position: absolute; bottom: 0; left: 43%; text-align: center;">
+      
+      <small>    
+        <br> Не является инвестиционной рекомендацией.
+        <br> Версия 1.1 (2021)
+        <br>
+      </small>
+    
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
