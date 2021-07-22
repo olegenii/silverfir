@@ -12,7 +12,7 @@ const urlencodedParser = bodyParser.urlencoded({extended: false});
 var app = express();
 var port = 8081;
 
-router.use(function (req,res,next) {
+router.use((req,res,next)=>{
   console.log('/' + req.method);
   next();
 });
@@ -24,35 +24,38 @@ router.use(function (req,res,next) {
 //    //res.sendFile(__dirname + '/index.html')
 //})
 
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/in/index.html')
+app.get('/',(req, res)=>{
+    //res.sendFile(__dirname + '/in/index.html')
+    var myReadStream = fs.createReadStream(__dirname + '/in/index.html');
+    myReadStream.pipe(res);
 })
 
-router.get('/createDirectory', function (req, res) {
-    
+router.get('/createDirectory',(req, res)=>{
     res.send(JSON.stringify({ created: "OK" }))
-
 });
 
-router.get('/data', function(req,res){
-  res.contentType('text/plain');
-
-    whois.lookup('olegen.ru', function(err, data) {
+router.get('/data', (req,res)=>{
+    res.contentType('text/plain');
+    whois.lookup('olegen.ru',(err, data)=>{
         res.send(data)
     });
 });
 
-router.get('/bond', function(req,res){
-    res.contentType('text/html'); 
-    res.sendFile(__dirname + '/out/bond_search.html');
+router.get('/bond', (req,res)=>{
+    //res.contentType('text/html'); 
+    //res.sendFile(__dirname + '/out/bond_search.html');
+    var myReadStream = fs.createReadStream(__dirname + '/out/bond_search.html');
+    myReadStream.pipe(res);
 });
 
-router.post('/bond_new', urlencodedParser, function(req,res){
+router.post('/bond_new', urlencodedParser, (req,res)=>{
   getHTML(showHtml,res,req.body.bidFrom,req.body.bidTill,req.body.dateFrom,req.body.dateTill,req.body.bondLevel,req.body.isOffer);
 });
 
 function showHtml(res){
-    res.sendFile(__dirname + '/out/bond_search.html')
+    //res.sendFile(__dirname + '/out/bond_search.html')
+    var myReadStream = fs.createReadStream(__dirname + '/out/bond_search.html');
+    myReadStream.pipe(res);
 };
 
 async function getHTML(callback){
@@ -60,7 +63,7 @@ async function getHTML(callback){
     callback(arguments[1]);
 };
 
-router.get('/bond_new', function(req,res){
+router.get('/bond_new',(req,res)=>{
     res.contentType('text/html');
     getHTML(showHtml,res);
 });
