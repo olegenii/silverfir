@@ -1,2 +1,3 @@
 /arch/
 /node_modules/
+/out/*
