@@ -355,7 +355,7 @@ async function HTMLgenerate(bonds, conditions, log) { //генерировани
     </body>
 
     </html>`
-	var out_file_name = './bond_search.html'
+	var out_file_name = './out/bond_search.html'
     try {
         fs.writeFileSync(out_file_name, hmtl)
         console.log(`\nЗаписано на диск с именем ${moment().format('YYYY-MM-DD')}.html`)

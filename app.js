@@ -19,7 +19,7 @@ router.use(function (req,res,next) {
 
 
 router.get('/', function (req, res) {
-    var myReadStream = fs.createReadStream(__dirname + '/index.html');
+    var myReadStream = fs.createReadStream(__dirname + '/in/index.html');
     myReadStream.pipe(res);
     //res.sendFile(__dirname + '/index.html')
 })
@@ -40,7 +40,7 @@ router.get('/data', function(req,res){
 
 router.get('/bond', function(req,res){
     res.contentType('text/html'); 
-    res.sendFile(__dirname + '/bond_search.html');
+    res.sendFile(__dirname + '/out/bond_search.html');
 });
 
 router.post('/bond_new', urlencodedParser, function(req,res){
@@ -48,7 +48,7 @@ router.post('/bond_new', urlencodedParser, function(req,res){
 });
 
 function showHtml(res){
-    res.sendFile(__dirname + '/bond_search.html')
+    res.sendFile(__dirname + '/out/bond_search.html')
 };
 
 async function getHTML(callback){
