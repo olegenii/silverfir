@@ -1,17 +1,30 @@
 {
-  "name": "nodejs-image-demo",
+  "name": "silverfir",
   "version": "1.0.0",
-  "description": "nodejs image demo",
-  "author": "Oleg Satalkin <oleg.satalkin@gmail.com>",
-  "license": "MIT",
+  "description": "bonds finder app",
   "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olegenii/silverfir.git"
+  },
   "keywords": [
-    "nodejs",
-    "node-whois",
-    "express",
-    "moment"
+    "silverfir",
+    "nodejs"
   ],
+  "author": "Oleg Satalkin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olegenii/silverfir/issues"
+  },
+  "homepage": "https://github.com/olegenii/silverfir#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.1",
+    "node-whois": "^2.1.3"
   }
 }
